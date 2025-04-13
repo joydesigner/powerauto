@@ -134,11 +134,11 @@ Register-ScheduledJob -Name "DailyHealthCheck" -ScriptBlock {
 ### Send Servers alerts.  
 #### Usage:
 
-- **Email Alert:** 
+**Email Alert:** 
 ```powershell
 Send-HealthAlert -Message "Disk space below 10GB on C:" -Severity Warning -ComputerName "SRV-WEB01" -AlertType Disk
 ```
-- **Multiple Channels**
+**Multiple Channels**
 ```powershell
 $teamsUrl = "https://outlook.office.com/webhook/..."
 $slackUrl = "https://hooks.slack.com/..."
@@ -150,7 +150,7 @@ Send-HealthAlert -Message "Database service stopped" -Severity Critical `
                 -TeamsWebhookUrl $teamsUrl `
                 -SlackWebhookUrl $slackUrl
 ```
-- **Integrated with Monitoring**
+**Integrated with Monitoring**
 ```powershell
 # Check services and pipe failures to alert function
 Get-Service -ComputerName "SRV-WEB01" -Name "W3SVC","MSSQLSERVER" | 
@@ -163,7 +163,7 @@ Get-Service -ComputerName "SRV-WEB01" -Name "W3SVC","MSSQLSERVER" |
                         -NotificationMethod All
     }
 ```
-- **Disk Space Monitoring**
+**Disk Space Monitoring**
 ```powershell
 Disk Space Monitoring Integration$disk = Get-CimInstance -ClassName Win32_LogicalDisk -Filter "DriveType=3 AND DeviceID='C:'"
 if ($disk.FreeSpace / 1GB -lt 20) {
@@ -173,7 +173,7 @@ if ($disk.FreeSpace / 1GB -lt 20) {
                     -NotificationMethod Email,Teams
 }
 ```
-- **Scheduled Health Check**
+**Scheduled Health Check**
 ```powershell
 # In a scheduled task script
 $cpu = Get-CimInstance -ClassName Win32_Processor | 
