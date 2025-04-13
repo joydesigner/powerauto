@@ -244,3 +244,52 @@ Import-Module.\PowerAutoModule
 # Duplicate removal only
 Remove-DuplicateFiles -Path "\\fileserver\departments\marketing" -Algorithm SHA256 -WhatIf
 ```
+
+### SQL Server database backup operations. (`Start-SqlBackup.ps1`)
+This script is designed to automate the process of backing up SQL Server databases. It uses the `Invoke-Sqlcmd` cmdlet to execute SQL commands to create and restore backups.
+
+#### Usage:
+```powershell
+# Import the module
+Import-Module.\PowerAutoModule
+# Daily Backups
+Start-SqlBackupJob -SqlInstance "SQLProd01" -BackupPath "\\backupserver\SQLBackups" -LogPath "C:\Logs\sql_backup_$(Get-Date -Format yyyyMMdd).log"
+
+#Scheduled Task Integration
+# Daily backup task
+$action = New-ScheduledTaskAction -Execute "PowerShell.exe" `
+    -Argument "-NoProfile -ExecutionPolicy Bypass -Command `"Import-Module SqlBackupRecovery; Start-SqlBackupJob -SqlInstance 'SQLProd01' -BackupPath 'D:\SQLBackups' -LogPath 'C:\Logs\sql_backup.log'`""
+
+$trigger = New-ScheduledTaskTrigger -Daily -At 1am
+Register-ScheduledTask -TaskName "Daily SQL Backups" -Action $action -Trigger $trigger -RunLevel Highest
+```
+
+
+### SQL Server database restore operations. (`Start-SqlRestore.ps1`)
+This script is designed to automate the process of restoring SQL Server databases. It uses the `Invoke-Sqlcmd` cmdlet to execute SQL commands to create and restore backups.
+
+#### Usage:
+```powershell
+Weekly Restore Tests
+Test-SqlRestore -SourceInstance "SQLProd01" -TestInstance "SQLTest01" -BackupPath "\\backupserver\SQLBackups" -LatestOnly -LogPath "C:\Logs\sql_restore_$(Get-Date -Format yyyyMMdd).log"
+
+# Scheduled Task Integration
+# Weekly restore task
+$action = New-ScheduledTaskAction -Execute "PowerShell.exe" `
+    -Argument "-NoProfile -ExecutionPolicy Bypass -Command `"Import-Module SqlBackupRecovery; Test-SqlRestore -SourceInstance 'SQLProd01' -TestInstance 'SQLTest01' -BackupPath 'D:\SQLBackups' -LatestOnly -LogPath 'C:\Logs\sql_restore.log'`""
+
+$trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At 3am
+Register-ScheduledTask -TaskName "Weekly Restore Tests" -Action $action -Trigger $trigger -RunLevel Highest
+```
+
+### Generates reports on backup and restore operations. (`Start-SqlBackupReport.ps1`)
+This module is designed to automate the process of generating SQL Server database backup and restore reports. It uses the `Invoke-Sqlcmd` cmdlet to execute SQL commands to retrieve backup & restore information and then generates a report.
+
+#### Usage:
+```powershell 
+# Import the module
+Import-Module.\PowerAutoModule
+# Generate HTML Report
+Get-SqlBackupReport -LogPath "C:\Logs\sql_backup.log" -Days 30 -OutputFormat HTML -OutputPath "C:\Reports\backup_report.html"
+
+```

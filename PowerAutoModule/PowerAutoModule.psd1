@@ -9,7 +9,10 @@
     'Invoke-ServerHealthCheck',
     'Send-HealthAlert',
     'Start-FileArchiveProcess',
-    'Remove-DuplicateFiles'
+    'Remove-DuplicateFiles',
+    'Start-SqlBackupJob', 
+    'Test-SqlRestore', 
+    'Get-SqlBackupReport'
   )
   Author             = 'Xin Zheng'
   CompanyName        = 'Xin Zheng'
