@@ -14,12 +14,12 @@ This repository follows a modular design approach, where each script is encapsul
 - **Consistency**: Ensures uniformity in automation tasks across teams and environments.
 
 ## Scripts Overview
-- **ACR Image Remove Script (`Remove_ACRImages.ps1`):**
-- **Automated Azure VM Deployment & Configuration (`Deploy_VMs.ps1`):**
-- **Import new users from CSV to Azure AD. (`Import-NewHires.ps1`):**
-- **Reset password using CSV input. (`Set-NewHiresPassword.ps1`):**
-- **Performs comprehensive health checks on servers. (`Invoke-ServerHealthCheck.ps1`):**
-- **Send Servers alerts. (`Send-HealthAlert.ps1`):**
+1. **ACR Image Remove Script (`Remove_ACRImages.ps1`):**
+2. **Automated Azure VM Deployment & Configuration (`Deploy_VMs.ps1`):**
+3. **Import new users from CSV to Azure AD. (`Import-NewHires.ps1`):**
+4. **Reset password using CSV input. (`Set-NewHiresPassword.ps1`):**
+5. **Performs comprehensive health checks on servers. (`Invoke-ServerHealthCheck.ps1`):**
+6. **Send Servers alerts. (`Send-HealthAlert.ps1`):**
 
 ### ACR Image Remove Script (`Remove_ACRImages.ps1`)
 
