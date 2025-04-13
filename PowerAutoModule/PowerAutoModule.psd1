@@ -8,6 +8,8 @@
     'Set-NewHirePassword',
     'Invoke-ServerHealthCheck',
     'Send-HealthAlert',
+    'Start-FileArchiveProcess',
+    'Remove-DuplicateFiles'
   )
   Author             = 'Xin Zheng'
   CompanyName        = 'Xin Zheng'

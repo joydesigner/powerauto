@@ -207,3 +207,39 @@ if ($cpu -gt 90) {
                     -AlertType CPU `
                     -NotificationMethod All
 }
+```
+### File Archiving Module (`Start-FileArchiving.ps1`)
+This script is designed to automate the process of archiving files from a source directory to a destination directory. It uses the `Copy-Item` cmdlet to copy the files, and the `Remove-Item` cmdlet to delete the original files after they have been copied.
+
+#### Usage:
+```powershell
+# Import the module
+Import-Module.\PowerAutoModule
+
+# Basic usage
+Start-FileArchiveProcess -SourcePath "\\fileserver\shared" -ArchivePath "\\fileserver\archive" -DaysOld 90
+
+# Advanced archiving with compression
+Start-FileArchiveProcess -SourcePath "C:\Projects" -ArchivePath "D:\Archives" `
+                        -DaysOld 180 -CompressArchives -LogPath "C:\Logs\archive_$(Get-Date -Format yyyyMMdd).csv"
+
+# Scheduled task integration
+# Create scheduled task for weekly archiving
+$action = New-ScheduledTaskAction -Execute "PowerShell.exe" `
+    -Argument "-NoProfile -ExecutionPolicy Bypass -Command `"Import-Module PowerAutoModule; Start-FileArchiveProcess -SourcePath '\\fileserver\shared' -ArchivePath '\\fileserver\archive' -DaysOld 90 -RemoveDuplicates -LogPath 'C:\Logs\archive.log'`""
+
+$trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At 2am
+Register-ScheduledTask -TaskName "Weekly File Archiving" -Action $action -Trigger $trigger -RunLevel Highest                        
+```
+
+### Clean Duplicated Files Module (`Start-DuplicateFileCleanup.ps1`)
+This script is designed to automate the process of identifying and removing duplicate files from a specified directory. It uses the `Get-ChildItem` cmdlet to list all files in the directory, and the `Group-Object` cmdlet to group files by their content. It then selects the first file in each group and removes the rest.
+
+#### Usage:
+```powershell
+# Import the module
+Import-Module.\PowerAutoModule
+
+# Duplicate removal only
+Remove-DuplicateFiles -Path "\\fileserver\departments\marketing" -Algorithm SHA256 -WhatIf
+```
