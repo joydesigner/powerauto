@@ -10,6 +10,9 @@ This repository is maintained by **Jason Zheng**, a versatile software, Cloud/De
 ## Modular Design Approach
 This repository follows a modular design approach, where each script is encapsulated as a reusable module. This allows for better maintainability, scalability, and reusability across different projects. By importing the `PowerAutoModule`, you can leverage the functionality of these scripts in your own automation workflows without modifying the core logic.
 
+## Script Folder
+The `PowerAutoModule/public` folder contains the PowerShell module scripts. Each script is designed to perform a specific task, such as creating Azure resources, managing Azure AD users, or performing health checks on servers.
+
 ### Benefits of Modular Design:
 - **Reusability**: Scripts can be reused across multiple projects or scenarios.
 - **Maintainability**: Updates to the module automatically propagate to all dependent scripts.
