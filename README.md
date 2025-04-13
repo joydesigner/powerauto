@@ -103,3 +103,32 @@ Get-Content "C:\HR\NewHires.csv" | Import-Csv |
     Select-Object -ExpandProperty SamAccountName |
     Set-NewHirePassword
 ```
+
+### Performs comprehensive health checks on servers. (`Invoke-ServerHealthCheck.ps1`)
+#### Usage:
+```powershell
+# Import module
+Import-Module.\PowerAutoModule
+# Basic monitoring
+Invoke-ServerHealthCheck -ComputerNames "Server01","Server02"
+
+# Advanced monitoring with custom thresholds
+Invoke-ServerHealthCheck -ComputerNames (Get-Content "servers.txt") `
+                         -DiskThresholdGB 20 `
+                         -CpuThresholdPercent 85 `
+                         -MemoryThresholdPercent 85 `
+                         -ServicesToMonitor "Spooler","WinRM","EventLog","MSSQLSERVER" `
+                         -AutoRestartServices
+
+# WhatIf mode (test run)
+Invoke-ServerHealthCheck -ComputerNames "Server01" -WhatIf
+
+# Scheduled task integration (run daily)
+$trigger = New-JobTrigger -Daily -At "3:00 AM"
+Register-ScheduledJob -Name "DailyHealthCheck" -ScriptBlock {
+    Import-Module ServerHealthMonitor
+    Invoke-ServerHealthCheck -ComputerNames (Get-Content "C:\ServerList.txt")
+} -Trigger $trigger
+```
+
+### Send Servers alerts.  
