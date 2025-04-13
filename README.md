@@ -146,7 +146,7 @@ Register-ScheduledJob -Name "DailyHealthCheck" -ScriptBlock {
 } -Trigger $trigger
 ```
 
-### Send Servers alerts.  
+### Send Servers alerts. (`Send-HealthAlert.ps1`)  
 #### Usage:
 
 **Email Alert:** 
