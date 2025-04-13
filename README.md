@@ -3,7 +3,17 @@
 
 This repository contains PowerShell scripts for automating various DevOps tasks, particularly focused on Azure resources.
 
-## Scripts
+## Modular Design Approach
+
+This repository follows a modular design approach, where each script is encapsulated as a reusable module. This allows for better maintainability, scalability, and reusability across different projects. By importing the `PowerAutoModule`, you can leverage the functionality of these scripts in your own automation workflows without modifying the core logic.
+
+### Benefits of Modular Design:
+- **Reusability**: Scripts can be reused across multiple projects or scenarios.
+- **Maintainability**: Updates to the module automatically propagate to all dependent scripts.
+- **Scalability**: Easily extend the module with new functionality without disrupting existing workflows.
+- **Consistency**: Ensures uniformity in automation tasks across teams and environments.
+
+## Scripts Overview
 
 ### ACR Image Remove Script (`Remove_ACRImages.ps1`)
 
@@ -85,6 +95,11 @@ Import-NewHires -CsvPath "C:\HR\NewHires.csv" `
 
 # WhatIf mode (test run)
 Import-NewHires -CsvPath "C:\HR\NewHires.csv" -WhatIf
+```
+
+To use the module, simply import it into your PowerShell session or script:
+```powershell
+Import-Module ./PowerAutoModule
 ```
 
 ### Reset password using CSV input. (`Set-NewHiresPassword.ps1`)
