@@ -1,10 +1,13 @@
 
-# PowerShell Automation Scripts
-
+# Power Auto Module Scripts
 This repository contains PowerShell scripts for automating various DevOps tasks, particularly focused on Azure resources.
 
-## Modular Design Approach
+#### Author
+This repository is maintained by **Jason Zheng**, a versatile software, Cloud/DevOps engineer with expertise in automation scripting. For any questions, suggestions, or contributions, feel free to reach out via GitHub or email.
 
+- GitHub: [Jason's Profile](https://github.com/joydesigner)
+
+## Modular Design Approach
 This repository follows a modular design approach, where each script is encapsulated as a reusable module. This allows for better maintainability, scalability, and reusability across different projects. By importing the `PowerAutoModule`, you can leverage the functionality of these scripts in your own automation workflows without modifying the core logic.
 
 ### Benefits of Modular Design:
@@ -27,8 +30,6 @@ This script automates the process of cleaning up old Docker images from an Azure
 
 #### Features:
 - Removes old images from specified ACR
-- Configurable number of images to retain per repository
-- Option to run in scan mode or deletion mode
 - Can target a specific repository or all repositories in the registry
 
 #### Usage:
