@@ -132,3 +132,57 @@ Register-ScheduledJob -Name "DailyHealthCheck" -ScriptBlock {
 ```
 
 ### Send Servers alerts.  
+#### Usage:
+
+- **Email Alert:** 
+```powershell
+Send-HealthAlert -Message "Disk space below 10GB on C:" -Severity Warning -ComputerName "SRV-WEB01" -AlertType Disk
+```
+- **Multiple Channels**
+```powershell
+$teamsUrl = "https://outlook.office.com/webhook/..."
+$slackUrl = "https://hooks.slack.com/..."
+
+Send-HealthAlert -Message "Database service stopped" -Severity Critical `
+                -ComputerName "SRV-DB01" -AlertType Service `
+                -NotificationMethod All `
+                -EmailRecipients "admin@company.com","dba@company.com" `
+                -TeamsWebhookUrl $teamsUrl `
+                -SlackWebhookUrl $slackUrl
+```
+- **Integrated with Monitoring**
+```powershell
+# Check services and pipe failures to alert function
+Get-Service -ComputerName "SRV-WEB01" -Name "W3SVC","MSSQLSERVER" | 
+    Where-Object { $_.Status -ne "Running" } | 
+    ForEach-Object {
+        Send-HealthAlert -Message "$($_.DisplayName) service stopped" `
+                        -Severity Critical `
+                        -ComputerName $_.MachineName `
+                        -AlertType Service `
+                        -NotificationMethod All
+    }
+```
+- **Disk Space Monitoring**
+```powershell
+Disk Space Monitoring Integration$disk = Get-CimInstance -ClassName Win32_LogicalDisk -Filter "DriveType=3 AND DeviceID='C:'"
+if ($disk.FreeSpace / 1GB -lt 20) {
+    Send-HealthAlert -Message "Drive C: has only $([math]::Round($disk.FreeSpace/1GB,2))GB free" `
+                    -Severity Warning `
+                    -AlertType Disk `
+                    -NotificationMethod Email,Teams
+}
+```
+- **Scheduled Health Check**
+```powershell
+# In a scheduled task script
+$cpu = Get-CimInstance -ClassName Win32_Processor | 
+       Measure-Object -Property LoadPercentage -Average | 
+       Select-Object -ExpandProperty Average
+
+if ($cpu -gt 90) {
+    Send-HealthAlert -Message "CPU at ${cpu}% for 15 minutes" `
+                    -Severity Critical `
+                    -AlertType CPU `
+                    -NotificationMethod All
+}
