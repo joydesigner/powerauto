@@ -68,7 +68,7 @@ SamAccountName,Name,GivenName,Surname,EmployeeID,JobTitle
 jdoe,John Doe,John,Doe,10045,Accountant
 bsmith,Bob Smith,Bob,Smith,10046,Financial Analyst
 ```
-### Usage:
+#### Usage:
 ```powershell
 # Import module
 Import-Module .\PowerAutoModule
@@ -88,20 +88,18 @@ Import-NewHires -CsvPath "C:\HR\NewHires.csv" -WhatIf
 ```
 
 ### Reset password using CSV input. (`Set-NewHiresPassword.ps1`)
-# Force password reset
 Example CSV:
 ```csv
 SamAccountName,Name,GivenName,Surname,EmployeeID,JobTitle
 jdoe,John Doe,John,Doe,10045,Accountant
 bsmith,Bob Smith,Bob,Smith,10046,Financial Analyst
 ```
-### Usage:
+#### Usage:
 ```powershell
 # Import module
 Import-Module.\PowerAutoModule
+# Force password reset
 Get-Content "C:\HR\NewHires.csv" | Import-Csv | 
     Select-Object -ExpandProperty SamAccountName |
     Set-NewHirePassword
 ```
-
-
