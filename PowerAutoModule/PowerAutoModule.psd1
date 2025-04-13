@@ -3,7 +3,11 @@
   RooTModule         = 'PowerAutoModule.psm1'
   FunctionToExport   = @(
     'Deploy-VMs',
-    'Re'
+    'Remove-ACRImages',
+    'Import-NewHires',
+    'Set-NewHirePassword',
+    'Invoke-ServerHealthCheck',
+    'Send-HealthAlert',
   )
   Author             = 'Xin Zheng'
   CompanyName        = 'Xin Zheng'

@@ -39,7 +39,7 @@ Manually deploying and configuring virtual machines in Azure is time-consuming a
 #### Usage:
 ```powershell
 # Import the module
-Import-Module ./MyAzureDeploymentModule
+Import-Module ./PowerAutoModule
 
 # Deploy servers with all parameters
 $params = @{
@@ -59,3 +59,49 @@ Deploy-WebServers @params
 Deploy-WebServers -ResourceGroupName "ProdRG" -Location "EastUS" -VmNames @("WebServer01","WebServer02") `
                   -VirtualNetworkName "ProdVNet" -SubnetName "Web" -SecurityGroupName "WebSG"
 ```
+
+### Import new users from CSV to Azure AD. (`Import-NewHires.ps1`)
+
+Example CSV:
+```csv
+SamAccountName,Name,GivenName,Surname,EmployeeID,JobTitle
+jdoe,John Doe,John,Doe,10045,Accountant
+bsmith,Bob Smith,Bob,Smith,10046,Financial Analyst
+```
+### Usage:
+```powershell
+# Import module
+Import-Module .\PowerAutoModule
+
+# Basic usage
+Import-NewHires -CsvPath "C:\HR\NewHires.csv"
+
+# Advanced usage
+Import-NewHires -CsvPath "C:\HR\NewHires.csv" `
+                -Groups "FinanceDept","AllEmployees","MelbourneOffice" `
+                -DefaultPassword "P@ssw0rd123!" `
+                -Domain "ourcompany.com" `
+                -OU "OU=Finance,DC=ourcompany,DC=com"
+
+# WhatIf mode (test run)
+Import-NewHires -CsvPath "C:\HR\NewHires.csv" -WhatIf
+```
+
+### Reset password using CSV input. (`Set-NewHiresPassword.ps1`)
+# Force password reset
+Example CSV:
+```csv
+SamAccountName,Name,GivenName,Surname,EmployeeID,JobTitle
+jdoe,John Doe,John,Doe,10045,Accountant
+bsmith,Bob Smith,Bob,Smith,10046,Financial Analyst
+```
+### Usage:
+```powershell
+# Import module
+Import-Module.\PowerAutoModule
+Get-Content "C:\HR\NewHires.csv" | Import-Csv | 
+    Select-Object -ExpandProperty SamAccountName |
+    Set-NewHirePassword
+```
+
+
