@@ -294,5 +294,16 @@ This module is designed to automate the process of generating SQL Server databas
 Import-Module.\PowerAutoModule
 # Generate HTML Report
 Get-SqlBackupReport -LogPath "C:\Logs\sql_backup.log" -Days 30 -OutputFormat HTML -OutputPath "C:\Reports\backup_report.html"
+```
 
+### Test Compliance
+This module is designed to Scan all Azure Subscriptions you have access to.
+- Check for:
+  - Tag Compliance (mandatory tags like Owner, Environment, CostCenter).
+  - Naming Convention Compliance (e.g., Resource Groups must start with rg-, VMs must start with vm-).
+  - Security Settings Compliance (e.g., Storage Accounts must have secure transfer enabled).
+
+#### Usage:
+```powershell
+Get-SubscriptionCompliance | Export-Csv -Path .\ComplianceReport.csv -NoTypeInformation
 ```
